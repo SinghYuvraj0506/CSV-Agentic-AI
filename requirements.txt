@@ -5,3 +5,5 @@ langchain_experimental
 langchain-google-genai
 tabulate
 pandas
+requests
+streamlit

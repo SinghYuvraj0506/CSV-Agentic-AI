@@ -75,10 +75,8 @@ async def csv_response(
             allow_dangerous_code=True
         )
 
-        # Invoke the agent with the user command
         response = agent.invoke(user_command)
 
-        # Check if the response contains 'output'
         if 'output' not in response:
             raise Exception("Some error occurred in building the file")
 
@@ -89,11 +87,9 @@ async def csv_response(
             # Convert the cleaned CSV content to a blob for download
             blob = get_blob_of_csv(cleaned_csv)
 
-            # Send the file as a response (Blob content)
             return StreamingResponse(blob, media_type="text/csv", headers={"Content-Disposition": "attachment; filename=output.csv"})
 
-        # If generateNew is False, return the normal response
-        return {"output": response['output']}
+        return response["output"].strip()
 
     except Exception as err:
         logging.error("Error in /response_csv endpoint", exc_info=True)
